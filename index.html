@@ -1,42 +1,59 @@
-<!DOCTYPE>
-<html>
-    <head>
-        <title>Launch Checklist</title>
-        <link rel = "stylesheet" type = "text/css" href = "styles.css" />
-        <script src = "script.js"></script>
-    </head>
-    <body>
-        <h1>Launch Checklist Form</h1>
-        <div id="missionTarget">
-            <!-- Fetch some planetary data -->
-        </div> 
-        <div id="launchForm">
-            <form>
-                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Pilot Name <input type="text" name="pilotName" id="pilotName"/></label>
-                </div>
-                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Co-pilot Name <input type="text" name="copilotName"/></label>
-                </div>
-                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Fuel Level (L) <input type="text" name="fuelLevel"/></label> 
-                </div>
-                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Cargo Mass (kg) <input type="text" name="cargoMass"/></label>
-                </div>
-                <button id="formSubmit">Submit</button>
-            </form>
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Launch Checklist</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <meta charset="utf-8">
+  </head>
+  <body onload="if (false) launchControl.setDefaults();">
+    <script async language="javascript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--script async language="javascript" src="jquery.min.js"></script-->
+    <script async language="javascript" src="script.js" type="text/javascript"></script>
+    <h1>Launch Checklist Form</h1>
+    <div id="missionConsole" style="display:none;">
+      <div id="missionTarget">
+        <!-- Fetch some planetary data -->
+        <h2>Mission Destination</h2>
+        <ol>
+          <li>Name: <span class="data" id="md_name"></span></li>
+          <li>Diameter: <span class="data" id="md_diameter"></span></li>
+          <li>Star: <span class="data" id="md_star"></span></li>
+          <li>Distance from Earth: <span class="data" id="md_distance"></span></li>
+          <li>Number of Moons: <span class="data" id="md_moons"></span></li>
+        </ol>
+        <img src="" id="md_image" class="orbitalImage" onload="planetScape.fixImg(this);">
+ </div>
+      <div id="missionOptions">
+      </div>
+    </div>
+    <div id="launchForm">
+      <form name="launchFormActual" method="post" onsubmit="">
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
+          <label>Pilot Name <input type="text" name="pilotName" id="pilotName" value="" onchange="return launchControl.status(this.name).onchange();" /></label>
         </div>
-        <div id="launchStatusCheck">
-            <h2 id="launchStatus">Awaiting Information Before Launch</h2>
-            <div  id="faultyItems">
-                <ol>
-                    <li id="pilotStatus">Pilot Ready</li>
-                    <li id="copilotStatus">Co-pilot Ready</li>
-                    <li id="fuelStatus">Fuel level high enough for launch</li>
-                    <li id="cargoStatus">Cargo mass low enough for launch</li>
-                </ol>
-            </div>
-        </div>    
-    </body>
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
+          <label>Co-pilot Name <input type="text" name="copilotName" id="copilotName" value="" onchange="return launchControl.status(this.name).onchange();" /></label>
+        </div>
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
+          <label>Fuel Level (L) <input type="text" name="fuelLevel" id="fuelLevel" value="" onchange="return launchControl.status(this.name).onchange();" /></label> 
+        </div>
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
+          <label>Cargo Mass (kg) <input type="text" name="cargoMass" id="cargoMass" value="" onchange="return launchControl.status(this.name).onchange();" /></label>
+        </div>
+        <button id="formSubmit" onclick="if (launchControl.preventDefault(this.form)) {planetScape.randomMission()}; return false;" type="button">Submit</button>&nbsp;
+        <!--button id="displayReveal" type="button" onclick="launchControl.toggleDisplay();">Display</button-->
+      </form>      
+    </div>
+    <div id="launchStatusCheck">
+      <h2 id="launchStatus">Awaiting Information Before Launch</h2>
+      <div  id="faultyItems">
+        <ol>
+          <li id="pilotStatus">Pilot NOT Ready</li>
+          <li id="copilotStatus">Co-pilot NOT Ready</li>
+          <li id="fuelStatus">Fuel level NOT high enough for launch</li>
+          <li id="cargoStatus">Cargo mass NOT low enough for launch</li>
+        </ol>
+      </div>
+    </div>
+  </body>
 </html>
